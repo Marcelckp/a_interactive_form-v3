@@ -235,7 +235,7 @@ const validationFail = (element) => {
     const parent = element.parentElement;
     parent.classList.add('not-valid');
     parent.classList.remove('valid');
-    parent.lastElementChild.style.display = '';
+    parent.lastElementChild.style.display = 'inherit';
 
 }
 
@@ -274,23 +274,26 @@ const emailValidation = () => {
 
 }
 
-// const register4ActValidation = () => {
+const register4ActValidation = () => {
 
-//     const isRegisterValid = activityCheckBox.checked > 0;
-//     console.log(isRegisterValid);
+    const isRegisterValid = total > 0;
+    console.log(isRegisterValid);
 
-//     if (isRegisterValid === true) {
+    const actPHint = document.querySelector('#activities-hint');
 
-//         validationPass(activityCheckBox);
+    if (isRegisterValid === true) {
 
-//     } else {
+        validationPass(activitiesFieldSet);
+        actPHint.style.display = 'none'
 
-//         validationFail(activityCheckBox);
+    } else {
 
-//     }
+        validationFail(activitiesFieldSet);
+        actPHint.style.display = 'inherit'
+    }
 
 
-// }
+}
 
 const cardNumberValidation = () => {
 
@@ -362,13 +365,13 @@ form.addEventListener('submit', (e) => {
 
     };
 
-    // if (!register4ActValidation()) {
+    if (!register4ActValidation()) {
 
 
-    //     e.preventDefault();
-    //     console.log('the register field prevented submission')
+        e.preventDefault();
+        console.log('the register field prevented submission')
 
-    // };
+    };
 
     if (creditCardDiv.style.display == '') {
 
