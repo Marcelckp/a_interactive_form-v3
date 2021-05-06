@@ -1,4 +1,6 @@
-// const registerBtn = document.querySelector('[type=submit]');
+/* Create all your necessary variables and log them to the console
+ *  check to ensure you're selecting the correct elements
+ */
 
 const otherJobRole = document.querySelector('#other-job-role');
 const jobSelection = document.querySelector('#title');
@@ -8,10 +10,8 @@ const designSelection = document.querySelector('#design');
 const activitiesFieldSet = document.querySelector('#activities');
 const activitiesBox = document.querySelector('#activities-box');
 const totalActCost = document.querySelector('#activities-cost');
-console.log(totalActCost);
 
 const activityCheckBox = document.querySelectorAll('div label [type=checkbox]');
-console.log(activityCheckBox);
 
 const paymentFieldSet = document.querySelector('payment-methods');
 const paymentMethod = document.querySelector('#payment');
@@ -21,16 +21,26 @@ const form = document.querySelector('form');
 const nameInput = document.querySelector('#name');
 const emailInput = document.querySelector('#email');
 const cardNumInput = document.querySelector('#cc-num');
-console.log(cardNumInput);
 const zipInput = document.querySelector('#zip');
-console.log(zipInput);
 const cvvInput = document.querySelector('#cvv');
-console.log(cvvInput);
 
+//use .focus() method on the nameInput so that the page loads and opens the name field automatically
 
 nameInput.focus()
 
+//Hide the other job role element by equating its display value to 'none'
 otherJobRole.style.display = 'none';
+
+/*  Create a event listener on the parent element of the job selection field 
+ *      add the listener on the change event 
+ *      log the job selection values 
+ * 
+ *  create a if/else statement 
+ *  in the if statement use a conditional that checks if the value of the job Selection is 'other'
+ *      if the value is other set the other job roles display value to '' or inherit
+ *  else  
+ *      other job roles display value should be set to 'none'/ hidden
+ */
 
 jobSelection.addEventListener('change', () => {
 
@@ -48,19 +58,42 @@ jobSelection.addEventListener('change', () => {
 
 })
 
-colorSelection.disabled = true
+//Disable the color Selection input field
+colorSelection.disabled = true;
+
+/*  Create a event listener for a change event  
+ *      log your design Selection value to see if you are targeting the correct information
+ */
 
 designSelection.addEventListener('change', () => {
 
-    console.log(designSelection.value)
+    console.log(designSelection.value);
+
+    /*  create a
+     *  if statement to check
+     *  if design Selection value is === to 'js puns' 
+     *  || (or) 
+     *  design Selection value is === to 'heart js' 
+     */
 
     if (designSelection.value === 'js puns' || designSelection.value === 'heart js') {
 
+        /*  if this condition is met
+         *  set color Selection.disable property to false so that people can use / set the color of the shirt if they select a design theme
+         */
+
         colorSelection.disabled = false;
+
+        /*  within the if statement create another if statement 
+         *       if design Selection value === 'js puns' 
+         *           set the innerHTML property to colorSelection.innerHTML = '' to reset the displayed items in the color Selection menu
+         *           set the innerHTML property of the select menu to a HTML string containing a template literal with the created shirt colour elements present
+         *           that are specific to the 'js puns' design selection value
+         */
 
         if (designSelection.value === 'js puns') {
 
-            colorSelection.innerHTML = ''
+            colorSelection.innerHTML = '';
 
             let colorContent = `
                                 <option selected hidden>Select a design theme above</option>
@@ -73,9 +106,16 @@ designSelection.addEventListener('change', () => {
 
         }
 
+        /*  Create a second if statement to check if
+         *      if design Selection value === 'heart js'
+         *          set the innerHTML property to colorSelection.innerHTML = '' to reset the displayed items in the color Selection menu
+         *          set the innerHTML property to the select menu to a HTML string containing a template literal with the created shirt colour elements present
+         *          that are specific to the 'heart js' design selection value 
+         */
+
         if (designSelection.value === 'heart js') {
 
-            colorSelection.innerHTML = ''
+            colorSelection.innerHTML = '';
 
             let colorContent = `
                                 <option selected hidden>Select a design theme above</option>
@@ -90,19 +130,29 @@ designSelection.addEventListener('change', () => {
 
     } else {
 
-        colorSelection.disabled = true
+        //else if the initial condition isn't met set the .disabled property of the color selection menu to true to disable it again
+
+        colorSelection.disabled = true;
 
     }
 
 })
 
+// Create A variable for total and equate it to 0
 let total = 0;
 
+
+//Create A event listener on the change event and place the listener on the activitiesFieldSet container 
 activitiesFieldSet.addEventListener('change', (e) => {
 
+    //log your event.target to ensure you are targeting the correct data
     const clickedActivityPrice = e.target.getAttribute('data-cost');
 
-    // console.log(clickedActivityPrice)
+    /* Create a if statement to check if the event target is checked in the activitiesFieldSet
+     *      if the condition is met add the price of the activity/item to the total variable
+     *      else
+     *      subtract the price of the clicked/unclicked activity/item from the total variable
+     */
 
     if (e.target.checked) {
 
@@ -120,29 +170,60 @@ activitiesFieldSet.addEventListener('change', (e) => {
 
     }
 
+    //equate the innerHTML property of the totalActCost to a template literal that contains the new ${total} amount
     totalActCost.innerHTML = `Total: $${total}`;
-
-    // console.log(total)
 
 })
 
+
+// Create a event listener on the change event and place the listener on the activitiesBox
 activitiesBox.addEventListener('change', (e) => {
 
+    //Create necessary variables
+    //clicked activity/events data day and time value
     const clickedActTime = e.target.getAttribute('data-day-and-time');
-    console.log(clickedActTime);
+
+    // console.log(clickedActTime);
+
+
+    //clicked event/activity
     const clicked = e.target;
+
+    /*  Create a for loop to iterate over all of the check box activities/items for the length of i < check boxes length (number of checkboxes)
+     *  Create necessary variables and log them to the console to ensure you are targeting the correct information 
+     */
 
     for (let i = 0; i < activityCheckBox.length; i++) {
 
+        //variable holding the parent element of each check box iterated over in the for loop
         const parentElement = activityCheckBox[i].parentElement;
 
+        //variable holding the data day and time of each check box iterated over in the for loop
         const ActivityDataTime = activityCheckBox[i].getAttribute('data-day-and-time');
-
         // console.log(ActivityDataTime);
 
+        /* Create a if statement that checks if 
+         *  the clicked targets data day and time is === the data day and time of iterated check box element form the for loop
+         *  AND (&&)
+         *  check if the clicked event is not !== to the activityCheckBox[i] ( the current iterated check box element )
+         *  so that the check box you select/click on does not get disabled along with the iterations data day and time checkbox that matches the check box
+         *  tha has been clicked
+         */
         if (clickedActTime === ActivityDataTime && clicked !== activityCheckBox[i]) {
 
+            //log there is conflict if the condition is met so you can see if clicking on one activity Interferes with other activity in the activity's check box
+            //list of check boxes created by the for loop
             console.log('there\'s conflict')
+
+            /*  Create another if/else 
+             *  to check if the item has been clicked
+             *      if true add a class = disabled to the parentElement of the clicked element
+             *      and disable the check box that has the same data day and time value 
+             * else
+             * 
+             */
+
+            /************************************************************************************************/
 
             if (clicked.checked) {
 
@@ -161,6 +242,15 @@ activitiesBox.addEventListener('change', (e) => {
     }
 
 })
+
+/*  Activities Accessibility
+ *  create a for loop where i < length of the activities check boxes and create an event listener on all the checkboxes
+ *  to listen for a focus event in which when that occur/or a item in the activities container is in focus it adds a class 
+ *  of focus to the current item/activity that is in focus
+ * 
+ *  create another event listener to listen for blur events/ when a item/activity is tabbed off of 
+ *  and when this occurs the element needs to be added a class of blur and have it's class of focus removed 
+ */
 
 for (let i = 0; i < activityCheckBox.length; i++) {
 
@@ -182,21 +272,39 @@ for (let i = 0; i < activityCheckBox.length; i++) {
 
 }
 
+/*  Select the correct elements 
+ *  store those elements in a variable 
+ */
+
 const paypalDiv = document.querySelector('#paypal');
 const bitcoinDiv = document.querySelector('#bitcoin');
 const creditCardDiv = document.querySelector('#credit-card');
 
+//set the display property of the paypalDiv to none so that the paypalDiv isn't visible on page load 
 paypalDiv.style.display = 'none';
 
+//set the display property of the bitcoinDiv to none so that the bitcoinDiv isn't visible on page load 
 bitcoinDiv.style.display = 'none';
+
+/*  Create a event listener to listen for the change event on the paymentMethod field set 
+ *      which contains the payment information and decide which payment method should be displayed based on what the value in the
+ *      select menu is === to
+ */
 
 paymentMethod.addEventListener('change', (event) => {
 
-
-
+    /*  Create a if statement to check if 
+     *      the value of the paymentMethod === 'paypal' 
+     *      || (or)
+     *      if the value of the paymentMethod === 'bitcoin'
+     */
 
     if (paymentMethod.value === 'paypal' || paymentMethod.value === 'bitcoin') {
 
+        /*  if the condition is met create 2 new if statements within the pervious
+         *
+         *
+         */
         if (paymentMethod.value === 'paypal') {
             bitcoin.style.display = 'none';
             creditCardDiv.style.display = 'none';
@@ -283,12 +391,12 @@ const register4ActValidation = () => {
 
     if (isRegisterValid === true) {
 
-        validationPass(activitiesFieldSet);
+        validationPass(activitiesBox);
         actPHint.style.display = 'none'
 
     } else {
 
-        validationFail(activitiesFieldSet);
+        validationFail(activitiesBox);
         actPHint.style.display = 'inherit'
     }
 
