@@ -408,7 +408,7 @@ const register4ActValidation = () => {
     } else {
 
         validationFail(activitiesBox);
-
+        activitiesBox.classList.remove('valid')
         actPHint.style.display = 'inherit';
     }
 
