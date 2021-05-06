@@ -223,7 +223,7 @@ activitiesBox.addEventListener('change', (e) => {
              * 
              */
 
-            /************************************************************************************************/
+            /*********************************************************************************************************/
 
             if (clicked.checked) {
 
@@ -389,15 +389,23 @@ const register4ActValidation = () => {
 
     const actPHint = document.querySelector('#activities-hint');
 
+    const ActParent = activityCheckBox.parentElement;
+
     if (isRegisterValid === true) {
 
-        validationPass(activitiesBox);
-        actPHint.style.display = 'none'
+        /*************************************************************************************************************/
+
+        // validationPass(activitiesBox);
+        activitiesFieldSet.className = 'activities'
+        activitiesBox.classList.add('valid')
+        activitiesBox.classList.remove('not-valid')
+        actPHint.style.display = 'none';
 
     } else {
 
         validationFail(activitiesBox);
-        actPHint.style.display = 'inherit'
+
+        actPHint.style.display = 'inherit';
     }
 
 
