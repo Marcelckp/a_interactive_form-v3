@@ -1,30 +1,31 @@
 // const registerBtn = document.querySelector('[type=submit]');
 
 const otherJobRole = document.querySelector('#other-job-role');
-const jobSelection = document.querySelector('#title')
-const colorSelection = document.querySelector('#color')
-const designSelection = document.querySelector('#design')
+const jobSelection = document.querySelector('#title');
+const colorSelection = document.querySelector('#color');
+const designSelection = document.querySelector('#design');
 
 const activitiesFieldSet = document.querySelector('#activities');
-const totalActCost = document.querySelector('#activities-cost')
+const activitiesBox = document.querySelector('#activities-box');
+const totalActCost = document.querySelector('#activities-cost');
 console.log(totalActCost);
 
-const activityCheckBox = document.querySelectorAll('div label [type=checkbox]')
-console.log(activityCheckBox)
+const activityCheckBox = document.querySelectorAll('div label [type=checkbox]');
+console.log(activityCheckBox);
 
-const paymentFieldSet = document.querySelector('payment-methods')
-const paymentMethod = document.querySelector('#payment')
+const paymentFieldSet = document.querySelector('payment-methods');
+const paymentMethod = document.querySelector('#payment');
 
 const form = document.querySelector('form');
 
 const nameInput = document.querySelector('#name');
 const emailInput = document.querySelector('#email');
 const cardNumInput = document.querySelector('#cc-num');
-console.log(cardNumInput)
-const zipInput = document.querySelector('#zip')
-console.log(zipInput)
-const cvvInput = document.querySelector('#cvv')
-console.log(cvvInput)
+console.log(cardNumInput);
+const zipInput = document.querySelector('#zip');
+console.log(zipInput);
+const cvvInput = document.querySelector('#cvv');
+console.log(cvvInput);
 
 
 nameInput.focus()
@@ -95,46 +96,98 @@ designSelection.addEventListener('change', () => {
 
 })
 
+let total = 0;
+
 activitiesFieldSet.addEventListener('change', (e) => {
 
-        let total = 0;
+    const clickedActivityPrice = e.target.getAttribute('data-cost');
 
-        const clickedActivityPrice = e.target.getAttribute('data-cost')
-        const clickedActivityName = e.target.getAttribute('name')
+    // console.log(clickedActivityPrice)
 
-        console.log(clickedActivityPrice)
-        console.log(clickedActivityName)
+    if (e.target.checked) {
 
-        if (e.target.checked) {
+        //add a unary plus to change the str( string )value in clickedActivityPrice to a int( integer )
+        //Add value to the total
 
-            total += parseInt(clickedActivityPrice);
+        total += +clickedActivityPrice;
 
-        } else {
+    } else {
 
-            total -= parseInt(clickedActivityPrice);
+        //add parseInt to the clickedActivityPrice to change the value to a int ( works the same as unary (+) )
+        //Add value to the total
 
-        }
-        totalActCost.innerHTML = `Total: $${total}`;
-        console.log(total)
-            // for (let i = 0; i < activityCheckBox.length; i++) {
-
-        //     const checkBoxName = activityCheckBox[i].getAttribute('name');
-        //     console.log(checkBoxName)
-
-
-
+        total -= parseInt(clickedActivityPrice);
 
     }
 
-    // }
+    totalActCost.innerHTML = `Total: $${total}`;
 
-)
+    // console.log(total)
+
+})
+
+activitiesBox.addEventListener('change', (e) => {
+
+    const clickedActTime = e.target.getAttribute('data-day-and-time');
+    console.log(clickedActTime);
+    const clicked = e.target;
+
+    for (let i = 0; i < activityCheckBox.length; i++) {
+
+        const parentElement = activityCheckBox[i].parentElement;
+
+        const ActivityDataTime = activityCheckBox[i].getAttribute('data-day-and-time');
+
+        // console.log(ActivityDataTime);
+
+        if (clickedActTime === ActivityDataTime && clicked !== activityCheckBox[i]) {
+
+            console.log('there\'s conflict')
+
+            if (clicked.checked) {
+
+                parentElement.classList.add('disabled')
+                activityCheckBox[i].disabled = true;
+
+            } else {
+
+                parentElement.classList.remove('disabled')
+                activityCheckBox[i].disabled = false;
+
+            }
+
+        }
+
+    }
+
+})
+
+for (let i = 0; i < activityCheckBox.length; i++) {
+
+    const allBoxes = activityCheckBox[i]
+    const parentElement = allBoxes.parentElement;
+
+    allBoxes.addEventListener('focus', () => {
+
+        parentElement.classList.add('focus')
+
+    })
+
+    allBoxes.addEventListener('blur', () => {
+
+        parentElement.classList.remove('focus');
+        parentElement.classList.add('blur');
+
+    })
+
+}
 
 const paypalDiv = document.querySelector('#paypal');
 const bitcoinDiv = document.querySelector('#bitcoin');
 const creditCardDiv = document.querySelector('#credit-card');
 
 paypalDiv.style.display = 'none';
+
 bitcoinDiv.style.display = 'none';
 
 paymentMethod.addEventListener('change', (event) => {
@@ -221,23 +274,23 @@ const emailValidation = () => {
 
 }
 
-const register4ActValidation = () => {
+// const register4ActValidation = () => {
 
-    const isRegisterValid = activityCheckBox.check > 0;
-    console.log(isRegisterValid);
+//     const isRegisterValid = activityCheckBox.checked > 0;
+//     console.log(isRegisterValid);
 
-    if (isRegisterValid === true) {
+//     if (isRegisterValid === true) {
 
-        validationPass(activityCheckBox);
+//         validationPass(activityCheckBox);
 
-    } else {
+//     } else {
 
-        validationFail(activityCheckBox);
+//         validationFail(activityCheckBox);
 
-    }
+//     }
 
 
-}
+// }
 
 const cardNumberValidation = () => {
 
@@ -267,7 +320,7 @@ const zipCodeValidation = () => {
 
     } else {
 
-        validation(zipInput)
+        validationFail(zipInput)
 
     }
 
@@ -309,33 +362,36 @@ form.addEventListener('submit', (e) => {
 
     };
 
-    if (!register4ActValidation()) {
+    // if (!register4ActValidation()) {
 
 
-        e.preventDefault();
-        console.log('the register field prevented submission')
+    //     e.preventDefault();
+    //     console.log('the register field prevented submission')
 
-    };
+    // };
 
+    if (creditCardDiv.style.display == '') {
 
-    if (!cardNumberValidation()) {
+        if (!cardNumberValidation()) {
 
-        e.preventDefault();
-        console.log('the card number field prevented submission')
+            e.preventDefault();
+            console.log('the card number field prevented submission')
 
-    };
+        };
 
-    if (!zipCodeValidation()) {
+        if (!zipCodeValidation()) {
 
-        e.preventDefault();
-        console.log('the zip field prevented submission')
+            e.preventDefault();
+            console.log('the zip field prevented submission')
 
-    };
+        };
 
-    if (!cvvValidation()) {
+        if (!cvvValidation()) {
 
-        e.preventDefault();
-        console.log('the cvv field prevented submission')
+            e.preventDefault();
+            console.log('the cvv field prevented submission')
+
+        }
 
     }
 
