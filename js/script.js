@@ -329,6 +329,10 @@ paymentMethod.addEventListener('change', (event) => {
 
 })
 
+/*  Create a validation pass for the input fields so that the fields that pass the validation can have the pass
+ *  validation class/ themes applied to the specific input element
+ */
+
 const validationPass = (element) => {
 
     const parent = element.parentElement;
