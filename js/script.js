@@ -388,47 +388,85 @@ const nameValidation = () => {
 
     //Create a validation regex for the name input field and .test it on the value/ user input in the name field 
     const isNameValid = /^[A-Za-z]+ ?[A-Za-z]*? ?[A-Za-z]*?$/.test(nameValue);
-    // const doesNameHaveNums = /^\d+$/.test(nameValue)
+
     //log your result to check if you are receiving the correct boolean value from your test
     // console.log(`The name input is ${nameValue} it\'s valid state is ${isNameValid}`);
 
-    // if (doesNameHaveNums === true) {
+    // if (isNameValid === true) {
 
-    //     const errorMsg = `Name field cannot contain numbers`;
-    //     nameHint.innerHTML = errorMsg;
-    //     validationFail(nameValue);
-
-    // } else {
-
-    //     validationPass(nameValue);
-
-    // }
-
-    if (isNameValid === true) {
-
-        //call the validation if the input passes the regex ( === true )/ if the conditional is passed and pass it the name input element
-        validationPass(nameInput);
-
-    } else {
-
-        //call the validation if the input fails/ if the conditional isn't pass and pass it the name input element  
-        validationFail(nameInput);
-
-    }
-
-    // if (isNameValid === true && doesNameHaveNums === false) {
-
-    //     validationPass(nameInput)
+    //     //call the validation if the input passes the regex ( === true )/ if the conditional is passed and pass it the name input element
+    //     validationPass(nameInput);
 
     // } else {
 
-    //     const errorStr = `Name field cannot be blank and cannot contain a number`;
-    //     nameHint.innerHTML = errorStr;
-    //     validationFail(nameInput)
+    //     //call the validation if the input fails/ if the conditional isn't pass and pass it the name input element  
+    //     validationFail(nameInput);
 
     // }
 
     return isNameValid;
+
+}
+
+const nameHint = document.querySelector('#name-hint');
+
+const nameNumbValidation = () => {
+
+    const nameValue = nameInput.value;
+
+    const doesNameHaveNums = /^\d+$/.test(nameValue)
+
+    const errorMsg = `Name field cannot contain numbers`;
+
+    // if (doesNameHaveNums === true) {
+
+    //     nameHint.innerHTML = errorMsg
+    //     validationFail(nameInput);
+
+    // } else {
+
+    //     validationPass(nameInput);
+
+    // }
+
+    return doesNameHaveNums;
+
+}
+
+const nameCompleteValidation = () => {
+
+    const nameValid = nameValidation();
+    const nameNumb = nameNumbValidation();
+    let valid = '';
+
+    if (nameValid === true && nameNumb === false) {
+
+        validationPass(nameInput);
+        valid = true
+    }
+
+    if (nameValid === false) {
+
+        nameHint.innerHTML = `Name field cannot be left blank`
+        validationFail(nameInput);
+        valid = false
+    }
+
+    if (nameNumb === true) {
+
+        nameHint.innerHTML = `Name field cannot contain a number`
+        validationFail(nameInput);
+        valid = false
+    }
+
+    // if (nameValid === false && nameNumb === true) {
+
+    //     nameHint.innerHTML = `Name field cannot be left black or contain a number`
+    //     validationFail();
+
+    // }
+
+    return valid;
 
 }
 
@@ -563,7 +601,7 @@ console.log(emailParentElement);
 
 nameParentElement.addEventListener('keyup', (e) => {
 
-    nameValidation();
+    nameCompleteValidation();
     console.log(e.target.value);
 
 })
@@ -588,8 +626,7 @@ emailParentElement.addEventListener('keyup', (e) => {
 
 form.addEventListener('submit', (e) => {
 
-    if (!nameValidation()) {
-
+    if (!nameCompleteValidation()) {
 
         e.preventDefault();
         console.log('the name field prevented submission');
@@ -598,14 +635,12 @@ form.addEventListener('submit', (e) => {
 
     if (!emailValidation()) {
 
-
         e.preventDefault();
         console.log('the email field prevented submission');
 
     };
 
     if (!register4ActValidation()) {
-
 
         e.preventDefault();
         console.log('the register field prevented submission');
