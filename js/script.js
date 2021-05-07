@@ -414,7 +414,7 @@ const nameNumbValidation = () => {
 
     const nameValue = nameInput.value;
 
-    const doesNameHaveNums = /^\d+$/.test(nameValue)
+    const doesNameHaveNums = /\d+/.test(nameValue)
 
     const errorMsg = `Name field cannot contain numbers`;
 
