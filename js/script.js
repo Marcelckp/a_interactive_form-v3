@@ -465,7 +465,7 @@ const nameCompleteValidation = () => {
     //     validationFail();
 
     // }
-
+    //return the value of valid will be a boolean ( false or true )
     return valid;
 
 }
