@@ -378,7 +378,7 @@ const validationFail = (element) => {
 
 }
 
-//Create a function for validating the name input field
+//Create a function for validating the name input field for if the field has been left blank
 const nameValidation = () => {
 
     //Store user input in the nameInput field to a variable
@@ -408,8 +408,11 @@ const nameValidation = () => {
 
 }
 
+//Select the element in the name field that holds the hint for the validation field
 const nameHint = document.querySelector('#name-hint');
 
+
+//Create a function for validating the name input field for if the field contains numbers
 const nameNumbValidation = () => {
 
     const nameValue = nameInput.value;
@@ -433,6 +436,7 @@ const nameNumbValidation = () => {
 
 }
 
+//Create a main function where we will check if both prior validation functions are true and decide which error message to display based on what condition is met 
 const nameCompleteValidation = () => {
 
     const nameValid = nameValidation();
