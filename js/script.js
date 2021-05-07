@@ -96,7 +96,7 @@ designSelection.addEventListener('change', () => {
             colorSelection.innerHTML = '';
 
             let colorContent = `
-                                <option selected hidden>Select a design theme above</option>
+                                <option selected hidden>Select a Shirt Colour</option>
                                 <option data-theme="js puns" value="cornflowerblue">Cornflower Blue (JS Puns shirt only)</option>
                                 <option data-theme="js puns" value="darkslategrey">Dark Slate Grey (JS Puns shirt only)</option> 
                                 <option data-theme="js puns" value="gold">Gold (JS Puns shirt only)</option>
@@ -118,7 +118,7 @@ designSelection.addEventListener('change', () => {
             colorSelection.innerHTML = '';
 
             let colorContent = `
-                                <option selected hidden>Select a design theme above</option>
+                                <option selected hidden>Select a Shirt Colour</option>
                                 <option data-theme="heart js" value="tomato">Tomato (I &#9829; JS shirt only)</option>
                                 <option data-theme="heart js" value="steelblue">Steel Blue (I &#9829; JS shirt only)</option> 
                                 <option data-theme="heart js" value="dimgrey">Dim Grey (I &#9829; JS shirt only)</option> 
@@ -164,7 +164,7 @@ activitiesFieldSet.addEventListener('change', (e) => {
     } else {
 
         //add parseInt to the clickedActivityPrice to change the value to a int ( works the same as unary (+) )
-        //Add value to the total
+        //subtract value to the total
 
         total -= parseInt(clickedActivityPrice);
 
@@ -213,7 +213,7 @@ activitiesBox.addEventListener('change', (e) => {
 
             //log there is conflict if the condition is met so you can see if clicking on one activity Interferes with other activity in the activity's check box
             //list of check boxes created by the for loop
-            console.log('there\'s conflict')
+            console.log('there\'s conflict');
 
             /*  Create another if/else 
              *  to check if the item has been clicked
@@ -227,12 +227,12 @@ activitiesBox.addEventListener('change', (e) => {
 
             if (clicked.checked) {
 
-                parentElement.classList.add('disabled')
+                parentElement.classList.add('disabled');
                 activityCheckBox[i].disabled = true;
 
             } else {
 
-                parentElement.classList.remove('disabled')
+                parentElement.classList.remove('disabled');
                 activityCheckBox[i].disabled = false;
 
             }
@@ -254,12 +254,12 @@ activitiesBox.addEventListener('change', (e) => {
 
 for (let i = 0; i < activityCheckBox.length; i++) {
 
-    const allBoxes = activityCheckBox[i]
+    const allBoxes = activityCheckBox[i];
     const parentElement = allBoxes.parentElement;
 
     allBoxes.addEventListener('focus', () => {
 
-        parentElement.classList.add('focus')
+        parentElement.classList.add('focus');
 
     })
 
@@ -293,24 +293,42 @@ bitcoinDiv.style.display = 'none';
 
 paymentMethod.addEventListener('change', (event) => {
 
-    /*  Create a if statement to check if 
-     *      the value of the paymentMethod === 'paypal' 
-     *      || (or)
-     *      if the value of the paymentMethod === 'bitcoin'
+    /*  Create a if/else statement to check if 
+     *      if statement    
+     *          the value of the paymentMethod === 'paypal' 
+     *          || (or)
+     *          if the value of the paymentMethod === 'bitcoin'
+     * 
+     *      else
+     *          set the display property of the bitcoin div to none as it hasn't been selected 
+     *          set the display property of the paylpal div to none as it hasn't been selected
+     *          set the display property of the credit card div to '' so it displays the credit card div if the paypal or bitcoin payment method hasn't been selected in the selection menu
      */
 
     if (paymentMethod.value === 'paypal' || paymentMethod.value === 'bitcoin') {
 
-        /*  if the condition is met create 2 new if statements within the pervious
-         *
-         *
+        /*  if the condition is met create 2 new if statements within the created if statement 
+         *  first if statement
+         *      paymentMethod.value === 'paypal' if this condition is met 
+         *          set the display property of the bitcoin div to none as it hasn't been selected 
+         *          set the display property of the credit card div to none as it hasn't been selected
+         *          set the display property of the paypal div to '' so it can be displayed on the page since it's been selected
          */
+
         if (paymentMethod.value === 'paypal') {
-            bitcoin.style.display = 'none';
+            bitcoinDiv.style.display = 'none';
             creditCardDiv.style.display = 'none';
             paypalDiv.style.display = '';
 
         }
+
+        /*  Second if statement
+         *      paymentMethod.value === 'bitcoin' if this condition is met
+         *          set the display property of the bitcoin div to '' so it can be displayed on the page as it has been selected
+         *          set the display property of the paypal div to none as it hasn't been selected
+         *          set the display property of the credit card div to none as it hasn't been selected
+         */
+
         if (paymentMethod.value === 'bitcoin') {
 
             paypalDiv.style.display = 'none';
@@ -329,18 +347,27 @@ paymentMethod.addEventListener('change', (event) => {
 
 })
 
-/*  Create a validation pass for the input fields and give it the parameter (element) so that the fields that pass the validation can have the pass
- *  validation class/ themes applied to the specific input element
+/*  Create a validation pass function for the input fields and give it the parameter (element) 
+ *  (so function can be dynamic and be used multiple times for all the input fields)
+ *  so that the fields that pass the validation can have the pass validation class/ ( valid ) themes applied to the specific input element
+ *  and hide the validation hint since validation was passed 
  */
 
 const validationPass = (element) => {
 
     const parent = element.parentElement;
-    parent.className = 'valid';
+    parent.classList.add('valid');
     parent.classList.remove('not-valid');
     parent.lastElementChild.style.display = 'none';
 
 }
+
+/*  Create a validation fail function for the input fields and give it the parameter (element) 
+ *  (so function can be dynamic and be used multiple times for all the input fields)
+ *  so that the fields that fail the validation can have the fail validation class/ ( not-vail ) themes applied to the specific input element 
+ *  and show the validation hint since it failed validation by setting the display property of the parents last child element to 
+ *  an empty string ( '' ) or by setting it to 'inherit'
+ */
 
 const validationFail = (element) => {
 
@@ -351,28 +378,68 @@ const validationFail = (element) => {
 
 }
 
+//Create a function for validating the name input field
 const nameValidation = () => {
 
+    //Store user input in the nameInput field to a variable
     const nameValue = nameInput.value;
-    const isNameValid = /^[A_Za-z]+ ?[A-Za-z]*? ?[A-Za-z]*?$/.test(nameValue);
-    console.log(`The name input is ${nameValue} it\'s valid state is ${isNameValid}`);
+
+    const nameHint = document.querySelector('#name-hint');
+
+    //Create a validation regex for the name input field and .test it on the value/ user input in the name field 
+    const isNameValid = /^[A-Za-z]+ ?[A-Za-z]*? ?[A-Za-z]*?$/.test(nameValue);
+    // const doesNameHaveNums = /^\d+$/.test(nameValue)
+    //log your result to check if you are receiving the correct boolean value from your test
+    // console.log(`The name input is ${nameValue} it\'s valid state is ${isNameValid}`);
+
+    // if (doesNameHaveNums === true) {
+
+    //     const errorMsg = `Name field cannot contain numbers`;
+    //     nameHint.innerHTML = errorMsg;
+    //     validationFail(nameValue);
+
+    // } else {
+
+    //     validationPass(nameValue);
+
+    // }
+
     if (isNameValid === true) {
 
+        //call the validation if the input passes the regex ( === true )/ if the conditional is passed and pass it the name input element
         validationPass(nameInput);
 
     } else {
 
+        //call the validation if the input fails/ if the conditional isn't pass and pass it the name input element  
         validationFail(nameInput);
 
     }
 
+    // if (isNameValid === true && doesNameHaveNums === false) {
+
+    //     validationPass(nameInput)
+
+    // } else {
+
+    //     const errorStr = `Name field cannot be blank and cannot contain a number`;
+    //     nameHint.innerHTML = errorStr;
+    //     validationFail(nameInput)
+
+    // }
+
+    return isNameValid;
+
 }
 
+//Create a function for validating the email input field 
 const emailValidation = () => {
 
     const emailValue = emailInput.value;
+
     const isEmailValid = /^[^@]\w+@\w+[.](com|co[.]za|net|org|gov)$/.test(emailValue);
-    console.log(`The email input is ${emailValue} it\'s valid state is ${isEmailValid}`);
+
+    // console.log(`The email input is ${emailValue} it\'s valid state is ${isEmailValid}`);
 
     if (isEmailValid === true) {
 
@@ -384,42 +451,49 @@ const emailValidation = () => {
 
     }
 
+    return isEmailValid;
+
 }
 
+//Create a function for validating the register for activities field
 const register4ActValidation = () => {
 
     const isRegisterValid = total > 0;
     console.log(isRegisterValid);
 
-    const actPHint = document.querySelector('#activities-hint');
+    // const actPHint = document.querySelector('#activities-hint');
 
-    const ActParent = activityCheckBox.parentElement;
+    // const ActParent = activityCheckBox.parentElement;
 
     if (isRegisterValid === true) {
 
         /*************************************************************************************************************/
 
-        // validationPass(activitiesBox);
-        activitiesFieldSet.className = 'activities'
-        activitiesBox.classList.add('valid')
-        activitiesBox.classList.remove('not-valid')
-        actPHint.style.display = 'none';
+        validationPass(activitiesBox);
+
+        // activitiesFieldSet.className = 'activities'
+        // activitiesBox.classList.add('valid')
+        // activitiesBox.classList.remove('not-valid')
+        // actPHint.style.display = 'none';
 
     } else {
 
         validationFail(activitiesBox);
-        activitiesBox.classList.remove('valid')
-        actPHint.style.display = 'inherit';
+
+        // activitiesBox.classList.remove('valid')
+        // actPHint.style.display = 'inherit';
     }
 
+    return isRegisterValid;
 
 }
 
+//Create a function for validating the card number input field
 const cardNumberValidation = () => {
 
     const cardNumValue = cardNumInput.value;
     const isCardNumValid = /^\d{13,16}$/.test(cardNumValue);
-    console.log(`The card input is ${cardNumValue} it\'s valid state is ${isCardNumValid}`);
+    // console.log(`The card input is ${cardNumValue} it\'s valid state is ${isCardNumValid}`);
 
     if (isCardNumValid === true) {
 
@@ -430,30 +504,35 @@ const cardNumberValidation = () => {
         validationFail(cardNumInput);
 
     }
+
+    return isCardNumValid;
+
 }
 
+//Create a function for validating the zip code input field
 const zipCodeValidation = () => {
 
     const zipCodeValue = zipInput.value;
     const isZipValid = /^\d{5}$/.test(zipCodeValue);
-    console.log(`The card input is ${zipCodeValue} it\'s valid state is ${isZipValid}`);
+    // console.log(`The card input is ${zipCodeValue} it\'s valid state is ${isZipValid}`);
     if (isZipValid === true) {
 
-        validationPass(zipInput)
+        validationPass(zipInput);
 
     } else {
 
-        validationFail(zipInput)
+        validationFail(zipInput);
 
     }
-
+    return isZipValid;
 }
 
+//Create a function for validating the cvv input field 
 const cvvValidation = () => {
 
     const cvvValue = cvvInput.value;
     const isCvvValid = /^\d{3}$/.test(cvvValue);
-    console.log(`The card input is ${cvvValue} it\'s valid state is ${isCvvValid}`);
+    // console.log(`The card input is ${cvvValue} it\'s valid state is ${isCvvValid}`);
 
     if (isCvvValid === true) {
 
@@ -465,7 +544,47 @@ const cvvValidation = () => {
 
     }
 
+    return isCvvValid;
+
 }
+
+/*  Create in real time validation for the name and email field
+ *  target both the name and email fields parent elements and log your selection to ensure you are selecting the correct elements
+ */
+const nameParentElement = nameInput.parentElement;
+console.log(nameParentElement);
+
+const emailParentElement = emailInput.parentElement;
+console.log(emailParentElement);
+
+/*  Create a event listener on the key up event and place the listener on the parent element of the name element
+ *      call the nameValidation() function within the listener and log your results to check the accuracy of you name regular expression
+ */
+
+nameParentElement.addEventListener('keyup', (e) => {
+
+    nameValidation();
+    console.log(e.target.value);
+
+})
+
+/*  Create a event listener on the key up event and place the listener on the parent element of the email element
+ *      call the emailValidation() function within the listener and log your results to check the accuracy of your email regular expression 
+ */
+
+emailParentElement.addEventListener('keyup', (e) => {
+
+    emailValidation();
+    console.log(e.target.value);
+
+})
+
+/*  Create a add event listener on the submit event and place it on the form element 
+ *      within the event listener create if statements for checking if the specific condition in this case the validation of
+ *      each input field 
+ *      if the validation is failed then it needs to prevent the browser from submitting the form by using event.preventDefault() method
+ *      create log statements within the if statements to know which specific input field failed validation and prevented the form submission
+ */
 
 form.addEventListener('submit', (e) => {
 
@@ -473,7 +592,7 @@ form.addEventListener('submit', (e) => {
 
 
         e.preventDefault();
-        console.log('the name field prevented submission')
+        console.log('the name field prevented submission');
 
     };
 
@@ -481,7 +600,7 @@ form.addEventListener('submit', (e) => {
 
 
         e.preventDefault();
-        console.log('the email field prevented submission')
+        console.log('the email field prevented submission');
 
     };
 
@@ -489,11 +608,11 @@ form.addEventListener('submit', (e) => {
 
 
         e.preventDefault();
-        console.log('the register field prevented submission')
+        console.log('the register field prevented submission');
 
     };
 
-    if (creditCardDiv.style.display == '') {
+    if (creditCardDiv.style.display === '') {
 
         if (!cardNumberValidation()) {
 
@@ -505,14 +624,14 @@ form.addEventListener('submit', (e) => {
         if (!zipCodeValidation()) {
 
             e.preventDefault();
-            console.log('the zip field prevented submission')
+            console.log('the zip field prevented submission');
 
         };
 
         if (!cvvValidation()) {
 
             e.preventDefault();
-            console.log('the cvv field prevented submission')
+            console.log('the cvv field prevented submission');
 
         }
 
