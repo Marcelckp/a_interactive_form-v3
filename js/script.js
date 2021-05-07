@@ -387,92 +387,92 @@ const nameValidation = () => {
     const nameHint = document.querySelector('#name-hint');
 
     //Create a validation regex for the name input field and .test it on the value/ user input in the name field 
-    const isNameValid = /^[A-Za-z]+ ?[A-Za-z]*? ?[A-Za-z]*?$/.test(nameValue);
+    const isNameValid = /^\d*?\s*?\w+?\s*?\d*?\w*?\s?\d*?\w*?$/.test(nameValue);
 
     //log your result to check if you are receiving the correct boolean value from your test
     // console.log(`The name input is ${nameValue} it\'s valid state is ${isNameValid}`);
 
-    // if (isNameValid === true) {
+    if (isNameValid === true) {
 
-    //     //call the validation if the input passes the regex ( === true )/ if the conditional is passed and pass it the name input element
-    //     validationPass(nameInput);
+        //call the validation if the input passes the regex ( === true )/ if the conditional is passed and pass it the name input element
+        validationPass(nameInput);
 
-    // } else {
+    } else {
 
-    //     //call the validation if the input fails/ if the conditional isn't pass and pass it the name input element  
-    //     validationFail(nameInput);
+        //call the validation if the input fails/ if the conditional isn't pass and pass it the name input element  
+        validationFail(nameInput);
 
-    // }
+    }
 
     return isNameValid;
 
 }
 
 //Select the element in the name field that holds the hint for the validation field
-const nameHint = document.querySelector('#name-hint');
+// const nameHint = document.querySelector('#name-hint');
 
 
 //Create a function for validating the name input field for if the field contains numbers
-const nameNumbValidation = () => {
+// const nameNumbValidation = () => {
 
-    const nameValue = nameInput.value;
+// const nameValue = nameInput.value;
 
-    const doesNameHaveNums = /\d+/.test(nameValue)
+// const doesNameHaveNums = /\d+/.test(nameValue)
 
-    const errorMsg = `Name field cannot contain numbers`;
+// const errorMsg = `Name field cannot contain numbers`;
 
-    // if (doesNameHaveNums === true) {
+// // if (doesNameHaveNums === true) {
 
-    //     nameHint.innerHTML = errorMsg
-    //     validationFail(nameInput);
+// //     nameHint.innerHTML = errorMsg
+// //     validationFail(nameInput);
 
-    // } else {
+// // } else {
 
-    //     validationPass(nameInput);
+// //     validationPass(nameInput);
 
-    // }
+// // }
 
-    return doesNameHaveNums;
+// return doesNameHaveNums;
 
-}
+// }
 
-//Create a main function where we will check if both prior validation functions are true and decide which error message to display based on what condition is met 
-const nameCompleteValidation = () => {
+// //Create a main function where we will check if both prior validation functions are true and decide which error message to display based on what condition is met 
+// const nameCompleteValidation = () => {
 
-    const nameValid = nameValidation();
-    const nameNumb = nameNumbValidation();
-    let valid = '';
+//     const nameValid = nameValidation();
+//     const nameNumb = nameNumbValidation();
+//     let valid = '';
 
-    if (nameValid === true && nameNumb === false) {
+//     if (nameValid === true && nameNumb === false) {
 
-        validationPass(nameInput);
-        valid = true
-    }
+//         validationPass(nameInput);
+//         valid = true
+//     }
 
-    if (nameValid === false) {
+//     if (nameValid === false) {
 
-        nameHint.innerHTML = `Name field cannot be left blank`
-        validationFail(nameInput);
-        valid = false
-    }
+//         nameHint.innerHTML = `Name field cannot be left blank`
+//         validationFail(nameInput);
+//         valid = false
+//     }
 
-    if (nameNumb === true) {
+//     if (nameNumb === true) {
 
-        nameHint.innerHTML = `Name field cannot contain a number`
-        validationFail(nameInput);
-        valid = false
-    }
+//         nameHint.innerHTML = `Name field cannot contain a number`
+//         validationFail(nameInput);
+//         valid = false
+//     }
 
-    // if (nameValid === false && nameNumb === true) {
+//     // if (nameValid === false && nameNumb === true) {
 
-    //     nameHint.innerHTML = `Name field cannot be left black or contain a number`
-    //     validationFail();
+//     //     nameHint.innerHTML = `Name field cannot be left black or contain a number`
+//     //     validationFail();
 
-    // }
-    //return the value of valid will be a boolean ( false or true )
-    return valid;
+//     // }
+//     //return the value of valid will be a boolean ( false or true )
+//     return valid;
 
-}
+// }
 
 //Create a function for validating the email input field 
 const emailValidation = () => {
@@ -530,6 +530,9 @@ const register4ActValidation = () => {
 
 }
 
+//Create necessary function variables
+const cardNumHint = document.querySelector('#cc-hint');
+
 //Create a function for validating the card number input field
 const cardNumberValidation = () => {
 
@@ -537,17 +540,79 @@ const cardNumberValidation = () => {
     const isCardNumValid = /^\d{13,16}$/.test(cardNumValue);
     // console.log(`The card input is ${cardNumValue} it\'s valid state is ${isCardNumValid}`);
 
-    if (isCardNumValid === true) {
+    // if (isCardNumValid === true) {
 
-        validationPass(cardNumInput);
+    //     validationPass(cardNumInput);
 
-    } else {
+    // } else {
 
-        validationFail(cardNumInput);
+    //     validationFail(cardNumInput);
+
+    // }
+
+    return isCardNumValid;
+
+}
+
+
+
+const letterInCardNumb = () => {
+
+    const cardNumValue = cardNumInput.value;
+    const isLetterInCardNum = /[A-Za-z]+/.test(cardNumValue)
+
+    // if (isLetterInCardNum === true) {
+
+    //     validationFail(cardNumInput);
+
+    // } else {
+
+    //     validationPass(cardNumInput);
+
+    // }
+
+    return isLetterInCardNum;
+
+}
+
+const cardNumCompleteValidation = () => {
+
+    const letterInCardNum = letterInCardNumb();
+    const cardNumValidation = cardNumberValidation();
+
+    let valid = '';
+
+    if (letterInCardNum === false && cardNumValidation === true) {
+
+        validationPass(cardNumInput)
+        valid = true
+    }
+
+    // if (letterInCardNum === true) {
+
+    //     cardNumHint.innerHTML = `Card number cannot contain any letters`;
+    //     validationFail(cardNumInput);
+    //     valid = false
+
+    // }
+
+    if (cardNumValidation === false) {
+
+        cardNumHint.innerHTML = `Credit card number must be between 13 - 16 digits`;
+        validationFail(cardNumInput)
+        valid = false
 
     }
 
-    return isCardNumValid;
+    if (cardNumValidation === false && letterInCardNum === true) {
+
+        cardNumHint.innerHTML = `Credit card number cannot contain letters`;
+        validationFail(cardNumInput);
+        valid = false
+
+    }
+
+    return valid
 
 }
 
@@ -599,13 +664,16 @@ console.log(nameParentElement);
 const emailParentElement = emailInput.parentElement;
 console.log(emailParentElement);
 
+const cardNumParentElement = cardNumInput.parentElement
+
 /*  Create a event listener on the key up event and place the listener on the parent element of the name element
  *      call the nameValidation() function within the listener and log your results to check the accuracy of you name regular expression
  */
 
 nameParentElement.addEventListener('keyup', (e) => {
 
-    nameCompleteValidation();
+    // nameCompleteValidation();
+    nameValidation();
     console.log(e.target.value);
 
 })
@@ -621,6 +689,12 @@ emailParentElement.addEventListener('keyup', (e) => {
 
 })
 
+cardNumParentElement.addEventListener('keyup', (e) => {
+
+    cardNumCompleteValidation();
+
+})
+
 /*  Create a add event listener on the submit event and place it on the form element 
  *      within the event listener create if statements for checking if the specific condition in this case the validation of
  *      each input field 
@@ -630,7 +704,14 @@ emailParentElement.addEventListener('keyup', (e) => {
 
 form.addEventListener('submit', (e) => {
 
-    if (!nameCompleteValidation()) {
+    // if (!nameCompleteValidation()) {
+
+    //     e.preventDefault();
+    //     console.log('the name field prevented submission')
+
+    // }
+
+    if (!nameValidation()) {
 
         e.preventDefault();
         console.log('the name field prevented submission');
@@ -653,7 +734,7 @@ form.addEventListener('submit', (e) => {
 
     if (creditCardDiv.style.display === '') {
 
-        if (!cardNumberValidation()) {
+        if (!cardNumCompleteValidation()) {
 
             e.preventDefault();
             console.log('the card number field prevented submission')
