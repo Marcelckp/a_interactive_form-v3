@@ -1,7 +1,7 @@
 # a_interactive_form-v3
  My third project Creating a interactive form
  
- The name, email and card number input fields has in real time validation.
+ The name, email and card number input fields have in real time validation.
  
  The card number field has two validation error messages one for if the value isn't between 13 - 16 digits and one for if the value is a letter/Str.
 
