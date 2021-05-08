@@ -280,6 +280,8 @@ const paypalDiv = document.querySelector('#paypal');
 const bitcoinDiv = document.querySelector('#bitcoin');
 const creditCardDiv = document.querySelector('#credit-card');
 
+creditCardDiv.style.display = 'none';
+
 //set the display property of the paypalDiv to none so that the paypalDiv isn't visible on page load 
 paypalDiv.style.display = 'none';
 
@@ -305,7 +307,7 @@ paymentMethod.addEventListener('change', (event) => {
      *          set the display property of the credit card div to '' so it displays the credit card div if the paypal or bitcoin payment method hasn't been selected in the selection menu
      */
 
-    if (paymentMethod.value === 'paypal' || paymentMethod.value === 'bitcoin') {
+    if (paymentMethod.value === 'paypal' || paymentMethod.value === 'bitcoin' || paymentMethod.value === 'credit-card') {
 
         /*  if the condition is met create 2 new if statements within the created if statement 
          *  first if statement
@@ -316,6 +318,7 @@ paymentMethod.addEventListener('change', (event) => {
          */
 
         if (paymentMethod.value === 'paypal') {
+
             bitcoinDiv.style.display = 'none';
             creditCardDiv.style.display = 'none';
             paypalDiv.style.display = '';
@@ -337,9 +340,17 @@ paymentMethod.addEventListener('change', (event) => {
 
         }
 
+        if (paymentMethod.value === 'credit-card') {
+
+            bitcoinDiv.style.display = 'none';
+            paypalDiv.style.display = 'none';
+            creditCardDiv.style.display = '';
+
+        }
+
     } else {
 
-        creditCardDiv.style.display = '';
+        creditCardDiv.style.display = 'none';
         paypalDiv.style.display = 'none';
         bitcoin.style.display = 'none';
 
@@ -408,71 +419,6 @@ const nameValidation = () => {
 
 }
 
-//Select the element in the name field that holds the hint for the validation field
-// const nameHint = document.querySelector('#name-hint');
-
-
-//Create a function for validating the name input field for if the field contains numbers
-// const nameNumbValidation = () => {
-
-// const nameValue = nameInput.value;
-
-// const doesNameHaveNums = /\d+/.test(nameValue)
-
-// const errorMsg = `Name field cannot contain numbers`;
-
-// // if (doesNameHaveNums === true) {
-
-// //     nameHint.innerHTML = errorMsg
-// //     validationFail(nameInput);
-
-// // } else {
-
-// //     validationPass(nameInput);
-
-// // }
-
-// return doesNameHaveNums;
-
-// }
-
-// //Create a main function where we will check if both prior validation functions are true and decide which error message to display based on what condition is met 
-// const nameCompleteValidation = () => {
-
-//     const nameValid = nameValidation();
-//     const nameNumb = nameNumbValidation();
-//     let valid = '';
-
-//     if (nameValid === true && nameNumb === false) {
-
-//         validationPass(nameInput);
-//         valid = true
-//     }
-
-//     if (nameValid === false) {
-
-//         nameHint.innerHTML = `Name field cannot be left blank`
-//         validationFail(nameInput);
-//         valid = false
-//     }
-
-//     if (nameNumb === true) {
-
-//         nameHint.innerHTML = `Name field cannot contain a number`
-//         validationFail(nameInput);
-//         valid = false
-//     }
-
-//     // if (nameValid === false && nameNumb === true) {
-
-//     //     nameHint.innerHTML = `Name field cannot be left black or contain a number`
-//     //     validationFail();
-
-//     // }
-//     //return the value of valid will be a boolean ( false or true )
-//     return valid;
-
-// }
 
 //Create a function for validating the email input field 
 const emailValidation = () => {
@@ -540,16 +486,6 @@ const cardNumberValidation = () => {
     const isCardNumValid = /^\d{13,16}$/.test(cardNumValue);
     // console.log(`The card input is ${cardNumValue} it\'s valid state is ${isCardNumValid}`);
 
-    // if (isCardNumValid === true) {
-
-    //     validationPass(cardNumInput);
-
-    // } else {
-
-    //     validationFail(cardNumInput);
-
-    // }
-
     return isCardNumValid;
 
 }
@@ -560,16 +496,6 @@ const letterInCardNumb = () => {
 
     const cardNumValue = cardNumInput.value;
     const isLetterInCardNum = /[A-Za-z]+/.test(cardNumValue)
-
-    // if (isLetterInCardNum === true) {
-
-    //     validationFail(cardNumInput);
-
-    // } else {
-
-    //     validationPass(cardNumInput);
-
-    // }
 
     return isLetterInCardNum;
 
@@ -588,13 +514,6 @@ const cardNumCompleteValidation = () => {
         valid = true
     }
 
-    // if (letterInCardNum === true) {
-
-    //     cardNumHint.innerHTML = `Card number cannot contain any letters`;
-    //     validationFail(cardNumInput);
-    //     valid = false
-
-    // }
 
     if (cardNumValidation === false) {
 
@@ -728,7 +647,7 @@ form.addEventListener('submit', (e) => {
     if (!register4ActValidation()) {
 
         e.preventDefault();
-        console.log('the register field prevented submission');
+        console.log('the register activities field prevented submission');
 
     };
 
