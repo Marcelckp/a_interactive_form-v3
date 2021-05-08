@@ -397,12 +397,13 @@ const nameValidation = () => {
 
     const nameHint = document.querySelector('#name-hint');
 
-    //Create a validation regex for the name input field and .test it on the value/ user input in the name field 
+    //Create a validation regex for the name input field and .test it on the value/ user inputs in the name field 
     const isNameValid = /^\d*?\s*?\w+?\s*?\d*?\w*?\s?\d*?\w*?$/.test(nameValue);
 
     //log your result to check if you are receiving the correct boolean value from your test
     // console.log(`The name input is ${nameValue} it\'s valid state is ${isNameValid}`);
 
+    //Create a if statement 
     if (isNameValid === true) {
 
         //call the validation if the input passes the regex ( === true )/ if the conditional is passed and pass it the name input element
@@ -415,6 +416,7 @@ const nameValidation = () => {
 
     }
 
+    //return boolean test value
     return isNameValid;
 
 }
@@ -423,10 +425,13 @@ const nameValidation = () => {
 //Create a function for validating the email input field 
 const emailValidation = () => {
 
+    //Store user input in the emailInput field to a variable
     const emailValue = emailInput.value;
 
-    const isEmailValid = /^[^@]\w+@\w+[.](com|co[.]za|net|org|gov)$/.test(emailValue);
+    //Create a validation regex for the email input field and .test it on the value/ user input in the emails field 
+    const isEmailValid = /^[^@]\w+@\w+[.](com|co[.]za|net|org|gov)\*?$/.test(emailValue);
 
+    //log result to error test regex
     // console.log(`The email input is ${emailValue} it\'s valid state is ${isEmailValid}`);
 
     if (isEmailValid === true) {
@@ -439,6 +444,7 @@ const emailValidation = () => {
 
     }
 
+    //return boolean test value
     return isEmailValid;
 
 }
@@ -446,12 +452,11 @@ const emailValidation = () => {
 //Create a function for validating the register for activities field
 const register4ActValidation = () => {
 
+    //Store the boolean for the total number of check boxes checked > greater then 0 ( total > 0 ) in a variable 
     const isRegisterValid = total > 0;
+
+    //log result to check if your result 
     console.log(isRegisterValid);
-
-    // const actPHint = document.querySelector('#activities-hint');
-
-    // const ActParent = activityCheckBox.parentElement;
 
     if (isRegisterValid === true) {
 
@@ -459,19 +464,13 @@ const register4ActValidation = () => {
 
         validationPass(activitiesBox);
 
-        // activitiesFieldSet.className = 'activities'
-        // activitiesBox.classList.add('valid')
-        // activitiesBox.classList.remove('not-valid')
-        // actPHint.style.display = 'none';
-
     } else {
 
         validationFail(activitiesBox);
 
-        // activitiesBox.classList.remove('valid')
-        // actPHint.style.display = 'inherit';
     }
 
+    //return boolean test value
     return isRegisterValid;
 
 }
@@ -482,31 +481,54 @@ const cardNumHint = document.querySelector('#cc-hint');
 //Create a function for validating the card number input field
 const cardNumberValidation = () => {
 
+    //Store user input in the cardNumInput field to a variable
     const cardNumValue = cardNumInput.value;
+
+    //Create a validation regex for the card number input field and .test it on the value/ user inputs in the card number field 
     const isCardNumValid = /^\d{13,16}$/.test(cardNumValue);
+
+    //log result to check if your result
     // console.log(`The card input is ${cardNumValue} it\'s valid state is ${isCardNumValid}`);
 
+    //return boolean test value
     return isCardNumValid;
 
 }
 
-
-
+//Create a function for validating the card number input field
 const letterInCardNumb = () => {
 
+    //Store user input in the cardNumInput field to a variable
     const cardNumValue = cardNumInput.value;
+
+    //Create a validation regex to find letters in the card number field and store the .test boolean in a variable
     const isLetterInCardNum = /[A-Za-z]+/.test(cardNumValue)
 
+    //return boolean test value
     return isLetterInCardNum;
 
 }
+
+/*  Create a function for complete validation of the card number field
+ *      call both letterInCardNumb() and cardNumberValidation()
+ *      and store it in a variable
+ */
 
 const cardNumCompleteValidation = () => {
 
     const letterInCardNum = letterInCardNumb();
     const cardNumValidation = cardNumberValidation();
 
+    //Create a variable to store the boolean str to return after a specific if statements condition is met and assign a empty string 
     let valid = '';
+
+    /*  Create 3 if statements
+     *  first if statement
+     *      conditional 
+     *      if letterInCardNum is false (letterInCardNum === false)(no letter in the card input field) and if cardNumValidation is true (cardNumValidation === true)
+     *      (the cardNumValidation is returns true)
+     *          if condition is met then call validation Pass and set the valid variable to true
+     */
 
     if (letterInCardNum === false && cardNumValidation === true) {
 
@@ -514,6 +536,12 @@ const cardNumCompleteValidation = () => {
         valid = true
     }
 
+    /*  Second if statement
+     *      conditional
+     *      if cardNumValidation is false (cardNumValidation === false)
+     *          if condition is met then call validation Fail and set the cardNumHints .innerHTML property to 'credit card number must be between 13 - 16 digits'
+     *          and set the valid variable value to false 
+     */
 
     if (cardNumValidation === false) {
 
@@ -523,6 +551,13 @@ const cardNumCompleteValidation = () => {
 
     }
 
+    /*  Third if statement 
+     *      conditional
+     *      if cardNumValidation === false and letterInCardNum === true
+     *          if conditional is met the set the innerHTML property of the credit card number cannot contain letters 
+     *          and call the validation Fail as well as set the valid variable value to false 
+     */
+
     if (cardNumValidation === false && letterInCardNum === true) {
 
         cardNumHint.innerHTML = `Credit card number cannot contain letters`;
@@ -531,6 +566,7 @@ const cardNumCompleteValidation = () => {
 
     }
 
+    //return boolean test value
     return valid
 
 }
@@ -538,9 +574,15 @@ const cardNumCompleteValidation = () => {
 //Create a function for validating the zip code input field
 const zipCodeValidation = () => {
 
+    //Store user input in the zipInput field to a variable
     const zipCodeValue = zipInput.value;
+
+    //Create a validation regex for the zip input field and .test it on the value/ user input in the zip field 
     const isZipValid = /^\d{5}$/.test(zipCodeValue);
+
+    //log results to error test regex
     // console.log(`The card input is ${zipCodeValue} it\'s valid state is ${isZipValid}`);
+
     if (isZipValid === true) {
 
         validationPass(zipInput);
@@ -550,14 +592,21 @@ const zipCodeValidation = () => {
         validationFail(zipInput);
 
     }
+
+    //return boolean test value
     return isZipValid;
 }
 
 //Create a function for validating the cvv input field 
 const cvvValidation = () => {
 
+    //Store user input in the cvvInput field to a variable
     const cvvValue = cvvInput.value;
+
+    //Create a validation regex for the cvv input field and .test it on the value/ user input in the cvv field 
     const isCvvValid = /^\d{3}$/.test(cvvValue);
+
+    //log results to error test regex
     // console.log(`The card input is ${cvvValue} it\'s valid state is ${isCvvValid}`);
 
     if (isCvvValid === true) {
@@ -570,6 +619,7 @@ const cvvValidation = () => {
 
     }
 
+    //return boolean test value
     return isCvvValid;
 
 }
@@ -577,13 +627,15 @@ const cvvValidation = () => {
 /*  Create in real time validation for the name and email field
  *  target both the name and email fields parent elements and log your selection to ensure you are selecting the correct elements
  */
+
 const nameParentElement = nameInput.parentElement;
-console.log(nameParentElement);
+// console.log(nameParentElement);
 
 const emailParentElement = emailInput.parentElement;
-console.log(emailParentElement);
+// console.log(emailParentElement);
 
 const cardNumParentElement = cardNumInput.parentElement
+    //console.log(cardNumParentElement)
 
 /*  Create a event listener on the key up event and place the listener on the parent element of the name element
  *      call the nameValidation() function within the listener and log your results to check the accuracy of you name regular expression
@@ -593,20 +645,25 @@ nameParentElement.addEventListener('keyup', (e) => {
 
     // nameCompleteValidation();
     nameValidation();
-    console.log(e.target.value);
+
+    // console.log(e.target.value);
 
 })
 
-/*  Create a event listener on the key up event and place the listener on the parent element of the email element
+/*  Create a event listener on the key up event and place the listener on the parent element of the email element input field
  *      call the emailValidation() function within the listener and log your results to check the accuracy of your email regular expression 
  */
 
 emailParentElement.addEventListener('keyup', (e) => {
 
     emailValidation();
-    console.log(e.target.value);
+    // console.log(e.target.value);
 
 })
+
+/*  Create a event listener on the key up event and place the listener on the parent element of the card Number element input field
+ *      call the cardNumCompleteValidation() function within the listener and log your results to check the accuracy of your card Number regular expression
+ */
 
 cardNumParentElement.addEventListener('keyup', (e) => {
 
@@ -622,13 +679,6 @@ cardNumParentElement.addEventListener('keyup', (e) => {
  */
 
 form.addEventListener('submit', (e) => {
-
-    // if (!nameCompleteValidation()) {
-
-    //     e.preventDefault();
-    //     console.log('the name field prevented submission')
-
-    // }
 
     if (!nameValidation()) {
 
@@ -676,6 +726,7 @@ form.addEventListener('submit', (e) => {
 
     }
 
+    //log button clicked so you can see if the form event listener works as intended
     console.log('Register button clicked');
 
 })
