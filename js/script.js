@@ -280,8 +280,6 @@ const paypalDiv = document.querySelector('#paypal');
 const bitcoinDiv = document.querySelector('#bitcoin');
 const creditCardDiv = document.querySelector('#credit-card');
 
-creditCardDiv.style.display = 'none';
-
 //set the display property of the paypalDiv to none so that the paypalDiv isn't visible on page load 
 paypalDiv.style.display = 'none';
 
@@ -292,6 +290,12 @@ bitcoinDiv.style.display = 'none';
  *      which contains the payment information and decide which payment method should be displayed based on what the value in the
  *      select menu is === to
  */
+
+paymentMethod.innerHTML = `
+                        <option value="credit-card">Credit Card</option>
+                        <option value="paypal">PayPal</option>
+                        <option value="bitcoin">Bitcoin</option>
+                        `
 
 paymentMethod.addEventListener('change', (event) => {
 
